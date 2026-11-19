@@ -55,7 +55,14 @@ h2{font-size:1.6rem;margin:0 0 1.5rem;font-weight:600;letter-spacing:-.01em}
 
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:1.5rem}
 .skills h3{font-size:1rem;margin:0 0 .5rem;color:var(--accent)}
-.skills ul{margin:0;padding-left:1.1rem;color:var(--muted)}
+.skills ul{margin:0;padding:0;list-style:none}
+.skills li{display:flex;flex-direction:column;gap:.35rem;margin:0 0 .9rem;color:var(--ink);font-size:1rem}
+.legend{margin:-.75rem 0 1.5rem;color:var(--muted);font-size:.95rem}
+/* 5 points de niveau : --lvl (0 à 5) est défini dans le HTML */
+.dots{display:block;width:5.5rem;height:.6rem;
+  background:linear-gradient(to right,var(--accent) calc(var(--lvl) * 20%),#CBD3DA 0);
+  -webkit-mask:radial-gradient(circle closest-side,#000 96%,transparent 100%) 0 0/20% 100% repeat-x;
+  mask:radial-gradient(circle closest-side,#000 96%,transparent 100%) 0 0/20% 100% repeat-x}
 
 /* ===== Projets ===== */
 .projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:1.25rem}

@@ -31,12 +31,12 @@
   <div class="wrap hero">
     <div>
       <h1>
-        <span class="fr">Clément Faure<br>Étudiant en réseaux et télécoms</span>
-        <span class="en">Clément Faure<br>Networks &amp; Telecom student</span>
+        <span class="fr">Clément<br>Étudiant en réseaux et télécoms</span>
+        <span class="en">Clément<br>Networks &amp; Telecom student</span>
       </h1>
       <p>
-        <span class="fr">BUT Réseaux &amp; Télécommunications. Je suis passionné par les réseaux informatique.</span>
-        <span class="en">BUT in Networks &amp; Telecommunications. I am passionate about networks.</span>
+        <span class="fr">BUT Réseaux &amp; Télécommunications. Je conçois, configure et sécurise des réseaux, et je programme des outils pour les comprendre.</span>
+        <span class="en">BUT in Networks &amp; Telecommunications. I design, configure and secure networks, and I build tools to understand them.</span>
       </p>
       <div class="btns">
         <a class="btn primary" href="#projects"><span class="fr">Voir mes projets</span><span class="en">See my projects</span></a>
@@ -102,7 +102,8 @@
       3. Remplace les textes : chaque texte existe en version
          <span class="fr"> (français) et <span class="en"> (anglais)
       4. Pour les tags, ajoute ou supprime des <li>
-      5. Pour le lien, remplace href="#" (GitHub, rapport PDF, etc.)
+      5. Pour la page détail : copie projet-modele.html, renomme-la
+         (ex. projet-monprojet.html) et mets son nom dans href="..."
       ╚════════════════════════════════════════════════════════╝
     -->
     <div class="projects">
@@ -112,7 +113,7 @@
         <p class="fr">Jeu en terminal avec grille 8×10, placement des bateaux et couleurs d'affichage.</p>
         <p class="en">Terminal game with an 8×10 grid, ship placement and coloured output.</p>
         <ul class="tags"><li>Python</li><li>termcolor</li></ul>
-        <a href="#"><span class="fr">Voir le projet</span><span class="en">View project</span></a>
+        <a href="projet-bataille-navale.html"><span class="fr">Voir le détail</span><span class="en">See details</span></a>
       </article>
 
       <article class="project">
@@ -120,7 +121,7 @@
         <p class="fr">Jeu de cartes graphique avec gestion de la main du joueur et du croupier.</p>
         <p class="en">Graphical card game handling both the player's and the dealer's hands.</p>
         <ul class="tags"><li>Python</li><li>Pygame Zero</li></ul>
-        <a href="#"><span class="fr">Voir le projet</span><span class="en">View project</span></a>
+        <a href="projet-blackjack.html"><span class="fr">Voir le détail</span><span class="en">See details</span></a>
       </article>
 
       <article class="project">
@@ -128,7 +129,7 @@
         <p class="fr">Exemple à remplacer : VLAN, routage inter-VLAN et DHCP sur Packet Tracer.</p>
         <p class="en">Example to replace: VLANs, inter-VLAN routing and DHCP in Packet Tracer.</p>
         <ul class="tags"><li>Packet Tracer</li><li>VLAN</li><li>DHCP</li></ul>
-        <a href="#"><span class="fr">Voir le projet</span><span class="en">View project</span></a>
+        <a href="projet-reseau.html"><span class="fr">Voir le détail</span><span class="en">See details</span></a>
       </article>
 
     </div>
@@ -152,29 +153,6 @@
   <div class="wrap">© <span id="year"></span> Clément</div>
 </footer>
 
-<script>
-(function () {
-  var root = document.documentElement;
-  var btn = document.getElementById('lang');
-
-  function setLang(l) {
-    root.lang = l;
-    document.title = l === 'fr' ? root.dataset.titleFr : root.dataset.titleEn;
-    btn.textContent = l === 'fr' ? 'FR' : 'EN';
-    btn.setAttribute('aria-label', l === 'fr' ? 'Switch to English' : 'Passer en français');
-    try { localStorage.setItem('lang', l); } catch (e) {}
-  }
-
-  var saved = null;
-  try { saved = localStorage.getItem('lang'); } catch (e) {}
-  setLang(saved === 'en' ? 'en' : 'fr');
-
-  btn.addEventListener('click', function () {
-    setLang(root.lang === 'fr' ? 'en' : 'fr');
-  });
-
-  document.getElementById('year').textContent = new Date().getFullYear();
-})();
-</script>
+<script src="script.js"></script>
 </body>
 </html>

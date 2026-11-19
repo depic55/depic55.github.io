@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr" data-title-fr="Réseau d’entreprise simulé – Clément" data-title-en="Simulated company network – Clément">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Réseau d’entreprise simulé – Clément</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="index.html">Clément</a>
+    <nav aria-label="Navigation">
+      <a href="index.html#projects"><span class="fr">← Tous les projets</span><span class="en">← All projects</span></a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button id="lang" type="button" aria-label="Passer en anglais / Switch to English">FR</button>
+  </div>
+</header>
+
+<main class="wrap detail">
+
+  <h1><span class="fr">Réseau d’entreprise simulé</span><span class="en">Simulated company network</span></h1>
+  <p class="lead"><span class="fr">Exemple à remplacer : VLAN, routage inter-VLAN et DHCP sur Packet Tracer.</span><span class="en">Example to replace: VLANs, inter-VLAN routing and DHCP in Packet Tracer.</span></p>
+  <ul class="tags"><li>Packet Tracer</li><li>VLAN</li><li>DHCP</li></ul>
+
+  <div class="block">
+    <h2><span class="fr">Contexte</span><span class="en">Context</span></h2>
+    <p class="fr">Décris le besoin : par exemple, séparer les services d’une entreprise (administration, production) sur un même réseau.</p>
+    <p class="en">Describe the need: for example, separating company departments (admin, production) on the same network.</p>
+  </div>
+
+  <div class="block">
+    <h2><span class="fr">Objectifs</span><span class="en">Goals</span></h2>
+    <ul class="fr">
+        <li>Créer et configurer plusieurs VLAN</li>
+        <li>Permettre la communication entre VLAN avec un routeur</li>
+        <li>Attribuer les adresses automatiquement avec DHCP</li>
+    </ul>
+    <ul class="en">
+        <li>Create and configure several VLANs</li>
+        <li>Allow communication between VLANs with a router</li>
+        <li>Assign addresses automatically with DHCP</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h2><span class="fr">Explications</span><span class="en">How it works</span></h2>
+    <p class="fr">Ajoute ici un schéma du réseau (capture Packet Tracer), le plan d’adressage et la méthode de test.</p>
+    <p class="en">Add here a network diagram (Packet Tracer screenshot), the addressing plan and your testing method.</p>
+    <!-- Pour ajouter une capture d’écran : <img src="images/capture.png" alt="Description"> -->
+  </div>
+
+  <div class="block">
+    <h2>Code</h2>
+    <!-- Colle ton code entre <pre><code> et </code></pre>.
+         Si ton code contient &lt; ou &amp;, écris &amp;lt; et &amp;amp; à la place. -->
+    <figure class="code">
+      <figcaption>config-routeur.txt</figcaption>
+      <pre><code>! Exemple à remplacer par ta configuration
+interface GigabitEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0</code></pre>
+    </figure>
+  </div>
+
+  <div class="block">
+    <h2><span class="fr">Résultat et apprentissages</span><span class="en">Result and lessons learned</span></h2>
+    <p class="fr">Décris les tests réalisés (ping entre VLAN, vérification DHCP) et ce que tu as retenu.</p>
+    <p class="en">Describe the tests you ran (inter-VLAN ping, DHCP check) and what you took away.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Clément</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

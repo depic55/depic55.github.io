@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr" data-title-fr="Bataille navale – Clément" data-title-en="Battleship game – Clément">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bataille navale – Clément</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="index.html">Clément</a>
+    <nav aria-label="Navigation">
+      <a href="index.html#projects"><span class="fr">← Tous les projets</span><span class="en">← All projects</span></a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button id="lang" type="button" aria-label="Passer en anglais / Switch to English">FR</button>
+  </div>
+</header>
+
+<main class="wrap detail">
+
+  <h1><span class="fr">Bataille navale</span><span class="en">Battleship game</span></h1>
+  <p class="lead"><span class="fr">Jeu en terminal : grille 8×10, placement des bateaux et affichage en couleurs.</span><span class="en">Terminal game: 8×10 grid, ship placement and coloured output.</span></p>
+  <ul class="tags"><li>Python</li><li>termcolor</li></ul>
+
+  <div class="block">
+    <h2><span class="fr">Contexte</span><span class="en">Context</span></h2>
+    <p class="fr">Projet réalisé pendant les cours de programmation Python du BUT R&amp;T. Écris ici le sujet donné et la durée du projet.</p>
+    <p class="en">Project built during the Python programming classes of the BUT R&amp;T. Write the assignment and duration here.</p>
+  </div>
+
+  <div class="block">
+    <h2><span class="fr">Objectifs</span><span class="en">Goals</span></h2>
+    <ul class="fr">
+        <li>Représenter une grille de jeu avec des listes</li>
+        <li>Gérer les tirs : touché, coulé, manqué</li>
+        <li>Afficher le jeu lisiblement dans le terminal</li>
+    </ul>
+    <ul class="en">
+        <li>Represent a game board with lists</li>
+        <li>Handle shots: hit, sunk, missed</li>
+        <li>Display the game clearly in the terminal</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h2><span class="fr">Explications</span><span class="en">How it works</span></h2>
+    <p class="fr">Explique ici comment fonctionne ton programme : structure des données, fonctions principales, difficultés rencontrées.</p>
+    <p class="en">Explain here how your program works: data structures, main functions, difficulties you faced.</p>
+    <!-- Pour ajouter une capture d’écran : <img src="images/capture.png" alt="Description"> -->
+  </div>
+
+  <div class="block">
+    <h2>Code</h2>
+    <!-- Colle ton code entre <pre><code> et </code></pre>.
+         Si ton code contient &lt; ou &amp;, écris &amp;lt; et &amp;amp; à la place. -->
+    <figure class="code">
+      <figcaption>bataille_navale.py</figcaption>
+      <pre><code># Exemple à remplacer par ton code
+from termcolor import colored
+
+LIGNES, COLONNES = 8, 10
+grille = [["~"] * COLONNES for _ in range(LIGNES)]
+
+def afficher(grille):
+    for ligne in grille:
+        print(" ".join(colored(c, "blue") for c in ligne))
+
+afficher(grille)</code></pre>
+    </figure>
+  </div>
+
+  <div class="block">
+    <h2><span class="fr">Résultat et apprentissages</span><span class="en">Result and lessons learned</span></h2>
+    <p class="fr">Décris ce que tu as appris et comment le projet pourrait évoluer (jouer contre l’ordinateur, niveaux de difficulté…).</p>
+    <p class="en">Describe what you learned and how the project could evolve (playing against the computer, difficulty levels…).</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Clément</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

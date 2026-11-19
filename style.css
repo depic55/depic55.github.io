@@ -81,7 +81,7 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
 
 /* ===== Mobile ===== */
 @media (max-width:760px){
-  :root{--gutter:1.5rem}
+  :root{--gutter:1.75rem}
   body{font-size:1rem;line-height:1.6;overflow-wrap:break-word}
   p,li{hyphens:auto}
   html{scroll-padding-top:6.5rem}
@@ -89,9 +89,8 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
     gap:.25rem 1rem;padding-block:.6rem 0}
   .logo{grid-area:logo;font-size:1.1rem}
   #lang{grid-area:lang;min-width:3rem;min-height:2.5rem}
-  nav{grid-area:nav;margin:0;gap:1.5rem;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
-  nav::-webkit-scrollbar{display:none}
-  nav a{padding:.6rem 0;font-size:1rem}
+  nav{grid-area:nav;margin:0;flex-wrap:wrap;gap:0 1.25rem}
+  nav a{padding:.55rem 0;font-size:1rem}
   .hero{grid-template-columns:1fr;gap:1.5rem;padding-block:2rem 2.5rem}
   .topo{max-width:260px;margin:0 auto;order:-1}
   .hero h1{font-size:1.9rem}
@@ -119,4 +118,29 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
   font:400 .9rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:4}
 .detail img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
 @media (max-width:760px){.detail{padding-block:2rem 3rem}.code pre{font-size:.82rem}}
+/* ===== Animations des boutons (déclenchées par script.js) ===== */
+.btn,#lang{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;
+  transition:transform .15s ease,box-shadow .2s ease,background-color .2s,border-color .2s,color .2s}
+.btn:hover,#lang:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,110,140,.18)}
+.btn:active,#lang:active{transform:scale(.96);box-shadow:none}
+.ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.25;
+  transform:scale(0);animation:ripple .55s ease-out;pointer-events:none}
+.btn.primary .ripple{background:#fff;opacity:.4}
+@keyframes ripple{to{transform:scale(1);opacity:0}}
+#lang.flip{animation:flip .4s ease}
+@keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+body.swap main{animation:swap .4s ease}
+@keyframes swap{from{opacity:.15;transform:translateY(6px)}to{opacity:1;transform:none}}
+.project a::after{content:" →";display:inline-block;transition:transform .2s ease}
+.project a:hover::after{transform:translateX(4px)}
+nav a{position:relative}
+nav a::after{content:"";position:absolute;left:0;right:0;bottom:.25rem;height:2px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+nav a:hover::after{transform:scaleX(1)}
+@media (prefers-reduced-motion:reduce){
+  .btn,#lang,.project a::after,nav a::after{transition:none}
+  .btn:hover,#lang:hover,.btn:active,#lang:active{transform:none}
+  .ripple{display:none}
+  #lang.flip,body.swap main{animation:none}
+}
 @media (prefers-reduced-motion:reduce){.topo .packet{animation:none;offset-distance:50%}}

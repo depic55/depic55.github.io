@@ -13,7 +13,7 @@
 
 <header>
   <div class="wrap bar">
-    <a class="logo" href="index.html">Clément</a>
+    <a class="logo" href="index.html">Clément Faure</a>
     <nav aria-label="Navigation">
       <a href="index.html#projects"><span class="fr">← Tous les projets</span><span class="en">← All projects</span></a>
       <a href="index.html#contact">Contact</a>
@@ -25,7 +25,7 @@
 <main class="wrap detail">
 
   <h1><span class="fr">Bataille navale</span><span class="en">Battleship game</span></h1>
-  <p class="lead"><span class="fr">Jeu en terminal : grille 8×10, placement des bateaux et affichage en couleurs.</span><span class="en">Terminal game: 8×10 grid, ship placement and coloured output.</span></p>
+  <p class="lead"><span class="fr">Jeu : grille 8×10, affichage en couleurs.</span><span class="en">Terminal game: 8×10 grid,coloured output.</span></p>
   <ul class="tags"><li>Python</li><li>termcolor</li></ul>
 
   <div class="block">
@@ -63,13 +63,212 @@
       <figcaption>bataille_navale.py</figcaption>
       <pre><code># Exemple à remplacer par ton code
 from termcolor import colored
+from random import randint
+g_intro = [[1, 2, 3], ['a', 'b', 'c']]
 
-LIGNES, COLONNES = 8, 10
-grille = [["~"] * COLONNES for _ in range(LIGNES)]
+print(g_intro[0][1])
+print(g_intro[1][2])
 
-def afficher(grille):
-    for ligne in grille:
-        print(" ".join(colored(c, "blue") for c in ligne))
+for i in range(2):
+    print(g_intro[i][0], g_intro[i][1], g_intro[i][2])
+
+for j in range(3):
+    print(g_intro[0][j], g_intro[1][j])
+
+g = [
+    ['-', 'C', 'C', 'C', '-', '-', '-', 'T', 'T', '-'],
+    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    ['C', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+    ['C', '-', 'P', 'P', 'P', 'P', '-', '-', '-', 'T'],
+    ['C', '-', '-', '-', '-', '-', '-', '-', '-', 'T'],
+    ['-', '-', 'S', '-', 'T', '-', '-', '-', '-', '-'],
+    ['-', '-', '-', '-', 'T', '-', '-', 'S', '-', 'S'],
+    ['-', 'S', '-', '-', '-', '-', '-', '-', '-', '-']
+]
+
+def afficheSimple(grille):
+    for i in range(8):
+        for j in range(10):
+            print(grille[i][j], end=" ")
+        print()
+
+def afficheGrille(grille):
+    print("  A B C D E F G H I J")
+    for i in range(8):
+        print(i + 1, end=" ")
+        for j in range(10):
+            if grille[i][j] == '@':
+                print(colored('@', 'red'), end=" ")
+            elif grille[i][j] == '*':
+                print(colored('*', 'blue'), end=" ")
+            else:
+                print(grille[i][j], end=" ")
+        print()
+
+def getCoordonnees(cStr):
+    j = ord(cStr[0]) - ord('A')
+    i = int(cStr[1]) - 1
+    return i, j
+
+cStr = "C4"
+i, j = getCoordonnees(cStr)
+print("La case", cStr, "i =", i, "j =", j, "contient : ", g[i][j])
+
+cStr = "H7"
+i, j = getCoordonnees(cStr)
+print("La case", cStr, "i =", i, "j =", j, "contient : ", g[i][j])
+
+cStr = "F6"
+i, j = getCoordonnees(cStr)
+print("La case", cStr, "i =", i, "j =", j, "contient : ", g[i][j])
+
+def tousCoules(grille):
+    for i in range(8):
+        for j in range(10):
+            if grille[i][j] != '-' and grille[i][j] != '@' and grille[i][j] != '*':
+                return False
+    return True
+
+def sauvegarder(grille):
+    f = open("sauvegarde.txt", "w")
+    for i in range(8):
+        for j in range(10):
+            f.write(grille[i][j])
+        f.write("\n")
+    f.close()
+
+def charger():
+    f = open("sauvegarde.txt", "r")
+    grille = []
+    for ligne in f:
+        grille.append(list(ligne.strip()))
+    f.close()
+    return grille
+    
+    
+def grille_vide ():
+    grille=[['_'] * 10 for _ in range(8)]
+    return grille
+
+
+def verifHorizontal(grille,pos,taille):
+    v1=pos[1]
+    v2=pos[0]
+    v=False
+    if v2+taille <=10 :
+        for i in range(v2,v2+taille):
+            if str(grille[v1][i])== '_':
+                v=True
+            else: 
+                return False
+    if v == True:
+        return True
+def verifVertical(grille,pos,taille):
+    v1=pos[1]
+    v2=pos[0]
+    v=False
+    if v1+taille <=8 :
+        for i in range(v1,v1+taille):
+            if str(grille[i][v2])== '_':
+                v=True
+            else: 
+                return False
+    if v == True:
+        return True
+# Placement des bateaux
+
+def placeBateauHorizontal(grille,bateau,case):
+    l='12345678'
+    L='ABCDEFGHIJ'
+    place = False
+    for i in L:
+        for j in l:
+            if str(case[0])==str(i) and str(case[1])==str(j) and verifHorizontal(grille,[L.index(i),l.index(j)],len(bateau))==True:
+                for t in range(len(bateau)):
+                    grille[l.index(j)][L.index(i)+t]=bateau[t]
+                place=True
+    if place==True:
+        return True
+    else:
+        print('ERREUR')
+        return False
+def placeBateauVertical(grille,bateau,case):
+    l='12345678'
+    L='ABCDEFGHIJ'
+    place=False
+    for i in L:
+        for j in l:
+            if str(case[0])==str(i) and str(case[1])==str(j) and verifVertical(grille,[L.index(i),l.index(j)],len(bateau))==True:
+                for t in range(len(bateau)):
+                    grille[l.index(j)+t][L.index(i)]=bateau[t]
+                place=True
+    if place==True:
+        return True
+    else:
+        print('ERREUR')
+        return False
+# CODE PRINCIPALE
+
+sauvegarder(g)
+g = charger()
+
+coups = 0
+while not tousCoules(g):
+    afficheGrille(g)
+    case = input("Entrez une case : ").upper()
+    print('\n\n\n\n\n\n\n')
+    i, j = getCoordonnees(case)
+    if g[i][j] == '-':
+        g[i][j] = '*'
+        print("Dans l'eau")
+    else:
+        g[i][j] = '@'
+        print("Touché")
+    coups = coups + 1
+    print("Nombre de coups :", coups)
+
+magrille = grille_vide()
+bateaux=['PPPP','CCC','CCC','TT','TT','TT','S','S','S','S']
+i = 0
+while i != len(bateaux):
+    print(f'place le bateau {bateaux[i]}')
+    choix=input('donne le sens : ')
+    
+    if choix=='horiz':
+        if placeBateauHorizontal(magrille,bateaux[i]) == True:
+            i += 1
+        else: print('mauvaise case')
+    elif choix=='verti':
+        if placeBateauVertical(magrille,bateaux[i]) == True:
+            i +=1
+        else: print('mauvaise case')
+    else:
+        print(' le sens est mauvais')
+
+abc='ABCDEFGHIJ'
+magrille = grille_vide()
+bateaux=['PPPP','CCC','CCC','TT','TT','TT','S','S','S','S']
+i = 0
+while i != len(bateaux):
+    sens=randint(0,1)
+    L=randint(0,9)
+    l=randint(0,7)
+    case=str(abc[L])+str(l)
+    if sens==1:
+        if placeBateauHorizontal(magrille,bateaux[i],case) == True:
+            i += 1
+        else: print('mauvaise case')
+    elif sens==0:
+        if placeBateauVertical(magrille,bateaux[i],case) == True:
+            i +=1
+        else: print('mauvaise case')
+    else:
+        print(' le sens est mauvais')   
+afficheGrille(magrille)
+
+
+afficheGrille(g)
+print("Gagné !")
 
 afficher(grille)</code></pre>
     </figure>
@@ -77,7 +276,7 @@ afficher(grille)</code></pre>
 
   <div class="block">
     <h2><span class="fr">Résultat et apprentissages</span><span class="en">Result and lessons learned</span></h2>
-    <p class="fr">Décris ce que tu as appris et comment le projet pourrait évoluer (jouer contre l’ordinateur, niveaux de difficulté…).</p>
+    <p class="fr">.</p>
     <p class="en">Describe what you learned and how the project could evolve (playing against the computer, difficulty levels…).</p>
   </div>
 </main>

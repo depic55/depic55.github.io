@@ -3,13 +3,6 @@
   var btn = document.getElementById('lang');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Bouton de langue ---------- */
-  function setButtonText(l) {
-    var t = l === 'fr' ? 'FR' : 'EN';
-    if (btn.firstChild && btn.firstChild.nodeType === 3) btn.firstChild.nodeValue = t;
-    else btn.textContent = t;
-  }
-
   // relance une animation CSS en retirant puis remettant sa classe
   function play(el, cls) {
     el.classList.remove(cls);
@@ -17,10 +10,81 @@
     el.classList.add(cls);
   }
 
+  /* ---------- Mode sombre ---------- */
+  var MOON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  var SUN = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+
+  // le bouton est créé ici : pas besoin de le mettre dans le HTML
+  var tools = document.createElement('div');
+  tools.className = 'tools';
+  btn.parentNode.insertBefore(tools, btn);
+  var tbtn = document.createElement('button');
+  tbtn.id = 'theme';
+  tbtn.type = 'button';
+  tbtn.innerHTML = '<span class="ico"></span>';
+  var ico = tbtn.firstChild;
+  tools.appendChild(tbtn);
+  tools.appendChild(btn);
+
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    document.head.appendChild(meta);
+  }
+
+  function updateThemeLabel() {
+    var dark = root.getAttribute('data-theme') === 'dark';
+    var fr = root.lang === 'fr';
+    var label = dark ? (fr ? 'Activer le mode clair' : 'Switch to light mode')
+                     : (fr ? 'Activer le mode sombre' : 'Switch to dark mode');
+    tbtn.setAttribute('aria-label', label);
+    tbtn.title = label;
+  }
+
+  function applyTheme(t, animate) {
+    if (animate && !reduce) {
+      root.classList.add('theme-anim');
+      setTimeout(function () { root.classList.remove('theme-anim'); }, 450);
+      play(tbtn, 'spin');
+    }
+    root.setAttribute('data-theme', t);
+    ico.innerHTML = t === 'dark' ? SUN : MOON;
+    meta.content = t === 'dark' ? '#0F161C' : '#F6F7F5';
+    updateThemeLabel();
+  }
+
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem('theme'); } catch (e) {}
+  applyTheme(savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : (mq && mq.matches ? 'dark' : 'light'), false);
+
+  tbtn.addEventListener('click', function () {
+    var t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(t, true);
+    try { localStorage.setItem('theme', t); } catch (e) {}
+    savedTheme = t;
+  });
+
+  // tant que tu n'as pas choisi toi-même, le site suit le réglage de l'appareil
+  if (mq && mq.addEventListener) {
+    mq.addEventListener('change', function (e) {
+      if (!savedTheme) applyTheme(e.matches ? 'dark' : 'light', false);
+    });
+  }
+
+  /* ---------- Bouton de langue ---------- */
+  function setButtonText(l) {
+    var t = l === 'fr' ? 'FR' : 'EN';
+    if (btn.firstChild && btn.firstChild.nodeType === 3) btn.firstChild.nodeValue = t;
+    else btn.textContent = t;
+  }
+
   function setLang(l, animate) {
     root.lang = l;
     document.title = l === 'fr' ? root.dataset.titleFr : root.dataset.titleEn;
     btn.setAttribute('aria-label', l === 'fr' ? 'Switch to English' : 'Passer en français');
+    updateThemeLabel();
     try { localStorage.setItem('lang', l); } catch (e) {}
 
     if (animate && !reduce) {
@@ -59,7 +123,7 @@
   }
 
   // pour ajouter l'effet à d'autres éléments, ajoute leur sélecteur ici
-  document.querySelectorAll('.btn, #lang').forEach(function (el) {
+  document.querySelectorAll('.btn, #lang, #theme').forEach(function (el) {
     el.addEventListener('click', ripple);
   });
 

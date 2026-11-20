@@ -3,7 +3,15 @@
   --paper:#F6F7F5; --card:#FFFFFF; --ink:#14202B; --muted:#5B6773;
   --line:#D9DEE3; --accent:#0F6E8C; --accent-soft:#E3F0F4;
   --maxw:1040px; --gutter:1.25rem;
+  --track:#CBD3DA; --header-bg:rgba(246,247,245,.94); --code-bg:#14202B; --on-accent:#FFFFFF;
 }
+/* ===== Mode sombre : choisi avec le bouton, sinon suit le réglage de l'appareil ===== */
+:root[data-theme="dark"]{--paper:#0F161C; --card:#161F27; --ink:#E6ECF0; --muted:#9AA8B4; --line:#2A3641;
+  --accent:#4FB3D1; --accent-soft:#17323C; --track:#33414D; --header-bg:rgba(15,22,28,.92);
+  --code-bg:#0A0F14; --on-accent:#06212A; color-scheme:dark;}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--paper:#0F161C; --card:#161F27; --ink:#E6ECF0; --muted:#9AA8B4; --line:#2A3641;
+  --accent:#4FB3D1; --accent-soft:#17323C; --track:#33414D; --header-bg:rgba(15,22,28,.92);
+  --code-bg:#0A0F14; --on-accent:#06212A; color-scheme:dark;}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 html{scroll-behavior:smooth;scroll-padding-top:5rem}
@@ -18,16 +26,16 @@ html[lang="fr"] .en{display:none}
 html[lang="en"] .fr{display:none}
 
 /* ===== En-tête ===== */
-header{position:sticky;top:0;z-index:10;background:rgba(246,247,245,.94);
+header{position:sticky;top:0;z-index:10;background:var(--header-bg);
   backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;gap:1rem;padding-block:.75rem}
 .logo{font-weight:600;text-decoration:none;color:var(--ink)}
 nav{display:flex;align-items:center;gap:1.25rem;margin-left:auto}
 nav a{text-decoration:none;color:var(--muted);font-size:.95rem}
 nav a:hover{color:var(--ink)}
-#lang{font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;color:var(--ink);
+#lang,#theme{font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;color:var(--ink);
   background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.3rem .9rem}
-#lang:hover{border-color:var(--accent);color:var(--accent)}
+#lang:hover,#theme:hover{border-color:var(--accent);color:var(--accent)}
 
 /* ===== Accueil ===== */
 .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:center;padding-block:4.5rem 3.5rem}
@@ -36,7 +44,7 @@ nav a:hover{color:var(--ink)}
 .btns{display:flex;flex-wrap:wrap;gap:.75rem}
 .btn{display:inline-block;padding:.65rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:500;
   border:1px solid var(--accent);color:var(--accent)}
-.btn.primary{background:var(--accent);color:#fff}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
 .btn:hover{filter:brightness(.92)}
 .topo{width:100%;height:auto}
 .topo line{stroke:var(--line);stroke-width:2}
@@ -60,7 +68,7 @@ h2{font-size:1.6rem;margin:0 0 1.5rem;font-weight:600;letter-spacing:-.01em}
 .legend{margin:-.75rem 0 1.5rem;color:var(--muted);font-size:.95rem}
 /* 5 points de niveau : --lvl (0 à 5) est défini dans le HTML */
 .dots{display:block;width:5.5rem;height:.6rem;
-  background:linear-gradient(to right,var(--accent) calc(var(--lvl) * 20%),#CBD3DA 0);
+  background:linear-gradient(to right,var(--accent) calc(var(--lvl) * 20%),var(--track) 0);
   -webkit-mask:radial-gradient(circle closest-side,#000 96%,transparent 100%) 0 0/20% 100% repeat-x;
   mask:radial-gradient(circle closest-side,#000 96%,transparent 100%) 0 0/20% 100% repeat-x}
 
@@ -88,7 +96,10 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
   .bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"logo lang" "nav nav";
     gap:.25rem 1rem;padding-block:.6rem 0}
   .logo{grid-area:logo;font-size:1.1rem}
-  #lang{grid-area:lang;min-width:3rem;min-height:2.5rem}
+  .tools{grid-area:lang}
+  #lang,#theme{min-height:2.5rem}
+  #lang{min-width:3rem}
+  #theme{min-width:2.5rem}
   nav{grid-area:nav;margin:0;flex-wrap:wrap;gap:0 1.25rem}
   nav a{padding:.55rem 0;font-size:1rem}
   .hero{grid-template-columns:1fr;gap:1.5rem;padding-block:2rem 2.5rem}
@@ -112,20 +123,20 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
 .block h2{font-size:1.3rem;margin:0 0 .75rem}
 .block p,.block ul{max-width:42rem;margin:0 0 1rem}
 .block ul{padding-left:1.25rem}
-.code{margin:0 0 1rem;border-radius:10px;overflow:hidden;background:#14202B}
+.code{margin:0 0 1rem;border-radius:10px;overflow:hidden;background:var(--code-bg)}
 .code figcaption{padding:.5rem 1rem;font-size:.85rem;color:#B8C4CE;border-bottom:1px solid #2A3846}
 .code pre{margin:0;padding:1rem;overflow-x:auto;color:#E8EEF2;
   font:400 .9rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:4}
 .detail img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
 @media (max-width:760px){.detail{padding-block:2rem 3rem}.code pre{font-size:.82rem}}
 /* ===== Animations des boutons (déclenchées par script.js) ===== */
-.btn,#lang{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;
+.btn,#lang,#theme{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;
   transition:transform .15s ease,box-shadow .2s ease,background-color .2s,border-color .2s,color .2s}
-.btn:hover,#lang:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,110,140,.18)}
-.btn:active,#lang:active{transform:scale(.96);box-shadow:none}
+.btn:hover,#lang:hover,#theme:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,110,140,.18)}
+.btn:active,#lang:active,#theme:active{transform:scale(.96);box-shadow:none}
 .ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.25;
   transform:scale(0);animation:ripple .55s ease-out;pointer-events:none}
-.btn.primary .ripple{background:#fff;opacity:.4}
+.btn.primary .ripple{background:var(--on-accent);opacity:.4}
 @keyframes ripple{to{transform:scale(1);opacity:0}}
 #lang.flip{animation:flip .4s ease}
 @keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
@@ -137,10 +148,18 @@ nav a{position:relative}
 nav a::after{content:"";position:absolute;left:0;right:0;bottom:.25rem;height:2px;background:var(--accent);
   transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
 nav a:hover::after{transform:scaleX(1)}
+/* ===== Bouton mode sombre (créé par script.js) ===== */
+.tools{display:flex;gap:.5rem;align-items:stretch}
+#theme{display:inline-flex;align-items:center;justify-content:center;padding:.3rem .6rem}
+#theme .ico{display:inline-flex}
+#theme.spin .ico{animation:spin .5s ease}
+@keyframes spin{from{transform:rotate(-180deg) scale(.5);opacity:0}to{transform:none;opacity:1}}
+html.theme-anim *{transition:background-color .35s,color .35s,border-color .35s,fill .35s,stroke .35s!important}
 @media (prefers-reduced-motion:reduce){
-  .btn,#lang,.project a::after,nav a::after{transition:none}
-  .btn:hover,#lang:hover,.btn:active,#lang:active{transform:none}
+  .btn,#lang,#theme,.project a::after,nav a::after{transition:none}
+  .btn:hover,#lang:hover,#theme:hover,.btn:active,#lang:active,#theme:active{transform:none}
   .ripple{display:none}
-  #lang.flip,body.swap main{animation:none}
+  #lang.flip,body.swap main,#theme.spin .ico{animation:none}
+  html.theme-anim *{transition:none!important}
 }
 @media (prefers-reduced-motion:reduce){.topo .packet{animation:none;offset-distance:50%}}

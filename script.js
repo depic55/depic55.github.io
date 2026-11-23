@@ -49,6 +49,12 @@
       'box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .35s cubic-bezier(.3,1.35,.5,1)}',
     ':root[data-theme="dark"] #theme .thumb{transform:translateX(calc(var(--w) - var(--h)))}',
     '#theme .ico{display:grid;place-items:center}',
+    /* icônes SVG : tailles explicites et pas de déformation (Safari ordinateur) */
+    '#theme,#lang,.copy{-webkit-appearance:none;appearance:none}',
+    '#theme svg,.mail-label svg,.btn.linkedin svg{display:block;flex:none}',
+    '#theme svg{width:16px;height:16px}',
+    '.mail-label svg{width:18px;height:18px}',
+    '.btn.linkedin svg{width:22px;height:22px}',
     '#theme.spin .ico{animation:theme-spin .5s ease}',
     '@keyframes theme-spin{from{transform:rotate(-180deg) scale(.4);opacity:0}to{transform:none;opacity:1}}',
     /* transition douce des couleurs au moment du changement */

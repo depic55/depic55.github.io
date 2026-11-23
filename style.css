@@ -5,13 +5,6 @@
   --maxw:1040px; --gutter:1.25rem;
   --track:#CBD3DA; --header-bg:rgba(246,247,245,.94); --code-bg:#14202B; --on-accent:#FFFFFF;
 }
-/* ===== Mode sombre : choisi avec le bouton, sinon suit le réglage de l'appareil ===== */
-:root[data-theme="dark"]{--paper:#0F161C; --card:#161F27; --ink:#E6ECF0; --muted:#9AA8B4; --line:#2A3641;
-  --accent:#4FB3D1; --accent-soft:#17323C; --track:#33414D; --header-bg:rgba(15,22,28,.92);
-  --code-bg:#0A0F14; --on-accent:#06212A; color-scheme:dark;}
-@media (prefers-color-scheme:dark){:root:not([data-theme]){--paper:#0F161C; --card:#161F27; --ink:#E6ECF0; --muted:#9AA8B4; --line:#2A3641;
-  --accent:#4FB3D1; --accent-soft:#17323C; --track:#33414D; --header-bg:rgba(15,22,28,.92);
-  --code-bg:#0A0F14; --on-accent:#06212A; color-scheme:dark;}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 html{scroll-behavior:smooth;scroll-padding-top:5rem}
@@ -33,9 +26,9 @@ header{position:sticky;top:0;z-index:10;background:var(--header-bg);
 nav{display:flex;align-items:center;gap:1.25rem;margin-left:auto}
 nav a{text-decoration:none;color:var(--muted);font-size:.95rem}
 nav a:hover{color:var(--ink)}
-#lang,#theme{font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;color:var(--ink);
+#lang{font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;color:var(--ink);
   background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.3rem .9rem}
-#lang:hover,#theme:hover{border-color:var(--accent);color:var(--accent)}
+#lang:hover{border-color:var(--accent);color:var(--accent)}
 
 /* ===== Accueil ===== */
 .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:center;padding-block:4.5rem 3.5rem}
@@ -47,12 +40,15 @@ nav a:hover{color:var(--ink)}
 .btn.primary{background:var(--accent);color:var(--on-accent)}
 .btn:hover{filter:brightness(.92)}
 .topo{width:100%;height:auto}
-.topo line{stroke:var(--line);stroke-width:2}
+.topo line{stroke:var(--line);stroke-width:2;transition:stroke .4s ease}
+.topo line.lit{stroke:var(--accent)}
 .topo circle.n{fill:var(--card);stroke:var(--accent);stroke-width:2.5}
 .topo circle.hub{fill:var(--accent)}
-.topo .packet{fill:var(--accent);offset-path:path("M50 60 L180 120 L250 180");
-  animation:go 3.2s ease-in-out infinite}
-@keyframes go{from{offset-distance:0%}to{offset-distance:100%}}
+/* les paquets sont déplacés au hasard par script.js (invisibles tant que le script n'a pas démarré) */
+.topo .packet{fill:var(--accent);opacity:0;transition:opacity .3s ease}
+.topo .ping{fill:none;stroke:var(--accent);stroke-width:2;transform-box:fill-box;transform-origin:center;
+  pointer-events:none;animation:ping .9s ease-out forwards}
+@keyframes ping{from{transform:scale(1);opacity:.7}to{transform:scale(2.6);opacity:0}}
 
 /* ===== Sections ===== */
 section{padding:3.5rem 0;border-top:1px solid var(--line)}
@@ -87,6 +83,26 @@ h2{font-size:1.6rem;margin:0 0 1.5rem;font-weight:600;letter-spacing:-.01em}
 .contact li{overflow-wrap:anywhere}
 footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font-size:.9rem}
 
+/* ===== Contact ===== */
+.contact-intro{margin:-.5rem 0 1.5rem;color:var(--muted);max-width:36rem}
+.contact-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:stretch}
+.mail-card{flex:2 1 280px;display:flex;flex-direction:column;align-items:flex-start;gap:.65rem;
+  background:var(--accent-soft);border:1px solid var(--accent);border-radius:14px;padding:1.25rem 1.5rem}
+.mail-label{display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:.95rem}
+.mail-addr{font-size:clamp(1.1rem,4.8vw,1.6rem);font-weight:600;line-height:1.3;overflow-wrap:anywhere;
+  text-decoration:none;color:var(--accent)}
+.mail-addr:hover{text-decoration:underline;text-underline-offset:4px}
+.copy{position:relative;overflow:hidden;font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;
+  color:var(--accent);background:var(--card);border:1px solid var(--accent);border-radius:999px;padding:.4rem 1.1rem;
+  -webkit-tap-highlight-color:transparent;transition:background-color .2s,color .2s,transform .15s}
+.copy:active{transform:scale(.96)}
+.copy .done{display:none}
+.copy.copied{background:var(--accent);color:var(--on-accent)}
+.copy.copied .lbl{display:none}
+.copy.copied .done{display:inline}
+.btn.linkedin{flex:1 1 220px;display:flex;align-items:center;justify-content:center;gap:.65rem;
+  background:#0A66C2;border-color:#0A66C2;color:#fff;font-size:1.05rem;border-radius:14px;padding:1.25rem 1.5rem}
+
 /* ===== Mobile ===== */
 @media (max-width:760px){
   :root{--gutter:1.75rem}
@@ -96,10 +112,7 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
   .bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"logo lang" "nav nav";
     gap:.25rem 1rem;padding-block:.6rem 0}
   .logo{grid-area:logo;font-size:1.1rem}
-  .tools{grid-area:lang}
-  #lang,#theme{min-height:2.5rem}
-  #lang{min-width:3rem}
-  #theme{min-width:2.5rem}
+  #lang{grid-area:lang;min-width:3rem;min-height:2.5rem}
   nav{grid-area:nav;margin:0;flex-wrap:wrap;gap:0 1.25rem}
   nav a{padding:.55rem 0;font-size:1rem}
   .hero{grid-template-columns:1fr;gap:1.5rem;padding-block:2rem 2.5rem}
@@ -113,6 +126,8 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
   section{padding:2.5rem 0}
   h2{font-size:1.4rem;margin-bottom:1.25rem}
   .project{padding:1.2rem}
+  .mail-card{padding:1.1rem}
+  .btn.linkedin{padding:1.05rem}
 }
 /* ===== Page détail d'un projet ===== */
 .detail{padding-block:3rem 4rem}
@@ -130,10 +145,10 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font
 .detail img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
 @media (max-width:760px){.detail{padding-block:2rem 3rem}.code pre{font-size:.82rem}}
 /* ===== Animations des boutons (déclenchées par script.js) ===== */
-.btn,#lang,#theme{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;
+.btn,#lang{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;
   transition:transform .15s ease,box-shadow .2s ease,background-color .2s,border-color .2s,color .2s}
-.btn:hover,#lang:hover,#theme:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,110,140,.18)}
-.btn:active,#lang:active,#theme:active{transform:scale(.96);box-shadow:none}
+.btn:hover,#lang:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,110,140,.18)}
+.btn:active,#lang:active{transform:scale(.96);box-shadow:none}
 .ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.25;
   transform:scale(0);animation:ripple .55s ease-out;pointer-events:none}
 .btn.primary .ripple{background:var(--on-accent);opacity:.4}
@@ -148,18 +163,10 @@ nav a{position:relative}
 nav a::after{content:"";position:absolute;left:0;right:0;bottom:.25rem;height:2px;background:var(--accent);
   transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
 nav a:hover::after{transform:scaleX(1)}
-/* ===== Bouton mode sombre (créé par script.js) ===== */
-.tools{display:flex;gap:.5rem;align-items:stretch}
-#theme{display:inline-flex;align-items:center;justify-content:center;padding:.3rem .6rem}
-#theme .ico{display:inline-flex}
-#theme.spin .ico{animation:spin .5s ease}
-@keyframes spin{from{transform:rotate(-180deg) scale(.5);opacity:0}to{transform:none;opacity:1}}
-html.theme-anim *{transition:background-color .35s,color .35s,border-color .35s,fill .35s,stroke .35s!important}
 @media (prefers-reduced-motion:reduce){
-  .btn,#lang,#theme,.project a::after,nav a::after{transition:none}
-  .btn:hover,#lang:hover,#theme:hover,.btn:active,#lang:active,#theme:active{transform:none}
+  .btn,#lang,.project a::after,nav a::after{transition:none}
+  .btn:hover,#lang:hover,.btn:active,#lang:active{transform:none}
   .ripple{display:none}
-  #lang.flip,body.swap main,#theme.spin .ico{animation:none}
-  html.theme-anim *{transition:none!important}
+  #lang.flip,body.swap main{animation:none}
 }
-@media (prefers-reduced-motion:reduce){.topo .packet{animation:none;offset-distance:50%}}
+

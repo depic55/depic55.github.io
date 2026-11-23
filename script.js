@@ -43,11 +43,11 @@
       'transition:background-color .3s,border-color .2s}',
     '#theme:hover,#theme:active{border-color:var(--accent);transform:none;box-shadow:none}',
     '#theme:focus-visible{outline:3px solid var(--accent);outline-offset:3px}',
-    ':root[data-theme="dark"] #theme{background:var(--accent-soft)}',
+    '#theme.is-dark{background:var(--accent-soft)}',
     '#theme .thumb{position:absolute;top:3px;left:3px;width:calc(var(--h) - 8px);height:calc(var(--h) - 8px);' +
       'border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;' +
       'box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .35s cubic-bezier(.3,1.35,.5,1)}',
-    ':root[data-theme="dark"] #theme .thumb{transform:translateX(calc(var(--w) - var(--h)))}',
+    '#theme.is-dark .thumb{transform:translateX(calc(var(--w) - var(--h)))}',
     '#theme .ico{display:grid;place-items:center}',
     /* icônes SVG : tailles explicites et pas de déformation (Safari ordinateur) */
     '#theme,#lang,.copy{-webkit-appearance:none;appearance:none}',
@@ -57,6 +57,9 @@
     '.btn.linkedin svg{width:22px;height:22px}',
     '#theme.spin .ico{animation:theme-spin .5s ease}',
     '@keyframes theme-spin{from{transform:rotate(-180deg) scale(.4);opacity:0}to{transform:none;opacity:1}}',
+    /* voile de fondu : la page s'estompe, le thème change dessous, puis le voile disparaît */
+    '.theme-shade{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;pointer-events:none;opacity:0;transition:opacity .18s ease}',
+    '.theme-shade.on{opacity:1}',
     /* changement de thème instantané : aucune couleur ne "glisse", donc aucun texte illisible entre-temps */
     'html.no-anim *:not(#theme):not(.thumb):not(.ico){transition:none!important}',
     '@media (max-width:760px){.tools{grid-area:lang}#theme{--h:40px;--w:72px}}',
@@ -84,6 +87,10 @@
   tools.appendChild(tbtn);
   tools.appendChild(btn);
 
+  // couleur de fond du thème clair (lue dans le CSS, pour que le voile ait la bonne teinte)
+  root.setAttribute('data-theme', 'light');
+  var LIGHT_PAPER = getComputedStyle(root).getPropertyValue('--paper').trim() || '#F6F7F5';
+
   var meta = document.querySelector('meta[name="theme-color"]');
   if (!meta) {
     meta = document.createElement('meta');
@@ -97,13 +104,19 @@
     tbtn.title = label;
   }
 
+  // met à jour l'interrupteur lui-même (position du rond, icône, état)
+  function syncSwitch(t) {
+    tbtn.classList.toggle('is-dark', t === 'dark');
+    ico.innerHTML = t === 'dark' ? MOON : SUN;
+    tbtn.setAttribute('aria-checked', t === 'dark' ? 'true' : 'false');
+  }
+
   function applyTheme(t, animate) {
     root.classList.add('no-anim');           // coupe les transitions de couleur…
     if (animate && !reduce) play(tbtn, 'spin');
     root.setAttribute('data-theme', t);
-    ico.innerHTML = t === 'dark' ? MOON : SUN;
-    tbtn.setAttribute('aria-checked', t === 'dark' ? 'true' : 'false');
-    meta.content = t === 'dark' ? DARK.paper : '#F6F7F5';
+    syncSwitch(t);
+    meta.content = t === 'dark' ? DARK.paper : LIGHT_PAPER;
     updateThemeLabel();
     void root.offsetWidth;                   // …le temps que le nouveau thème soit appliqué
     root.classList.remove('no-anim');
@@ -114,11 +127,35 @@
   try { savedTheme = localStorage.getItem('theme'); } catch (e) {}
   applyTheme(savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : (mq && mq.matches ? 'dark' : 'light'), false);
 
+  // fondu doux : un voile de la couleur du NOUVEAU fond recouvre la page,
+  // le thème change dessous, puis le voile disparaît. Aucun texte n'est jamais
+  // affiché avec les mauvaises couleurs.
+  var busy = false;
+  function switchTheme(t) {
+    if (reduce) { applyTheme(t, false); syncSwitch(t); return; }
+    busy = true;
+    syncSwitch(t);                 // l'interrupteur réagit tout de suite
+    play(tbtn, 'spin');
+    var shade = document.createElement('div');
+    shade.className = 'theme-shade';
+    shade.style.background = t === 'dark' ? DARK.paper : LIGHT_PAPER;
+    document.body.appendChild(shade);
+    void shade.offsetWidth;
+    shade.classList.add('on');
+    setTimeout(function () {
+      applyTheme(t, false);        // le voile est opaque : on change le thème dessous
+      shade.style.transitionDuration = '.28s';
+      shade.classList.remove('on');
+      setTimeout(function () { shade.remove(); busy = false; }, 320);
+    }, 200);
+  }
+
   tbtn.addEventListener('click', function () {
+    if (busy) return;
     var t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    applyTheme(t, true);
     try { localStorage.setItem('theme', t); } catch (e) {}
     savedTheme = t;
+    switchTheme(t);
   });
 
   // tant que tu n'as pas choisi toi-même, le site suit le réglage de l'appareil

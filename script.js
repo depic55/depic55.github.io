@@ -57,12 +57,10 @@
     '.btn.linkedin svg{width:22px;height:22px}',
     '#theme.spin .ico{animation:theme-spin .5s ease}',
     '@keyframes theme-spin{from{transform:rotate(-180deg) scale(.4);opacity:0}to{transform:none;opacity:1}}',
-    /* transition douce des couleurs au moment du changement */
-    'html.theme-anim *{transition:background-color .35s,color .35s,border-color .35s,fill .35s,stroke .35s!important}',
-    'html.theme-anim #theme .thumb{transition:transform .35s cubic-bezier(.3,1.35,.5,1),background-color .35s,color .35s!important}',
+    /* changement de thème instantané : aucune couleur ne "glisse", donc aucun texte illisible entre-temps */
+    'html.no-anim *:not(#theme):not(.thumb):not(.ico){transition:none!important}',
     '@media (max-width:760px){.tools{grid-area:lang}#theme{--h:40px;--w:72px}}',
-    '@media (prefers-reduced-motion:reduce){#theme,#theme .thumb{transition:none}#theme.spin .ico{animation:none}' +
-      'html.theme-anim *,html.theme-anim #theme .thumb{transition:none!important}}'
+    '@media (prefers-reduced-motion:reduce){#theme,#theme .thumb{transition:none}#theme.spin .ico{animation:none}}'
   ].join('\n');
 
   var style = document.createElement('style');
@@ -100,16 +98,15 @@
   }
 
   function applyTheme(t, animate) {
-    if (animate && !reduce) {
-      root.classList.add('theme-anim');
-      setTimeout(function () { root.classList.remove('theme-anim'); }, 450);
-      play(tbtn, 'spin');
-    }
+    root.classList.add('no-anim');           // coupe les transitions de couleur…
+    if (animate && !reduce) play(tbtn, 'spin');
     root.setAttribute('data-theme', t);
     ico.innerHTML = t === 'dark' ? MOON : SUN;
     tbtn.setAttribute('aria-checked', t === 'dark' ? 'true' : 'false');
     meta.content = t === 'dark' ? DARK.paper : '#F6F7F5';
     updateThemeLabel();
+    void root.offsetWidth;                   // …le temps que le nouveau thème soit appliqué
+    root.classList.remove('no-anim');
   }
 
   var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;

@@ -6,7 +6,210 @@
 <title>Clément Faure – Portfolio R&T</title>
 <meta name="description" content="Portfolio BUT Réseaux & Télécommunications">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://font<!DOCTYPE html>
+<html lang="fr" data-title-fr="Clément Faure – Portfolio R&T" data-title-en="Clément Faure – Networks & Telecom Portfolio">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clément Faure – Portfolio R&T</title>
+<meta name="description" content="Portfolio BUT Réseaux & Télécommunications">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">Clément Faure</a>
+    <nav aria-label="Navigation">
+      <a href="#about"><span class="fr">À propos</span><span class="en">About</span></a>
+      <a href="#skills"><span class="fr">Compétences</span><span class="en">Skills</span></a>
+      <a href="#projects"><span class="fr">Projets</span><span class="en">Projects</span></a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button id="lang" type="button" aria-label="Passer en anglais / Switch to English">FR</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== ACCUEIL ===== -->
+  <div class="wrap hero">
+    <div>
+      <h1>
+        <span class="fr">Clément Faure<br>Étudiant en réseaux et télécoms</span>
+        <span class="en">Clément Faure<br>Networks &amp; Telecom student</span>
+      </h1>
+      <p>
+        <span class="fr">BUT Réseaux &amp; Télécommunications. Je suis passionnée par les réseaux et la cybersécurité.</span>
+        <span class="en">BUT in Networks &amp; Telecommunications. I am passionate about networks and cybersecurity.</span>
+      </p>
+      <div class="btns">
+        <a class="btn primary" href="#projects"><span class="fr">Voir mes projets</span><span class="en">See my projects</span></a>
+        <a class="btn" href="#contact"><span class="fr">Me contacter</span><span class="en">Contact me</span></a>
+      </div>
+    </div>
+    <svg class="topo" viewBox="0 0 360 260" role="img"
+         aria-label="Schéma d'un réseau en étoile / Star network diagram">
+      <line x1="50" y1="60" x2="180" y2="120"/><line x1="180" y1="40" x2="180" y2="120"/>
+      <line x1="310" y1="80" x2="180" y2="120"/><line x1="110" y1="190" x2="180" y2="120"/>
+      <line x1="250" y1="180" x2="180" y2="120"/><line x1="110" y1="190" x2="250" y2="180"/>
+      <circle class="n" cx="50" cy="60" r="12"/><circle class="n" cx="180" cy="40" r="12"/>
+      <circle class="n" cx="310" cy="80" r="12"/><circle class="n" cx="110" cy="190" r="12"/>
+      <circle class="n" cx="250" cy="180" r="12"/>
+      <circle class="hub" cx="180" cy="120" r="16"/>
+      <circle class="packet" cx="0" cy="0" r="6"/>
+    </svg>
+  </div>
+
+  <!-- ===== À PROPOS ===== -->
+  <section id="about" class="about">
+  <div class="wrap">
+    <h2><span class="fr">À propos</span><span class="en">About</span></h2>
+    <p class="fr">Je prépare un BUT R&amp;T. J'aime comprendre comment les données circulent, des protocoles jusqu'aux systèmes, et rendre la technique accessible. Je cherche un stage ou une alternance en réseaux, systèmes ou cybersécurité.</p>
+    <p class="en">I'm studying for a BUT in Networks &amp; Telecom. I like understanding how data travels, from protocols to operating systems, and making technology easy to grasp. I'm looking for an internship or work-study position in networking, systems or cybersecurity.</p>
+    </div>
+  </section>
+
+  <!-- ===== COMPÉTENCES ===== -->
+  <section id="skills">
+  <div class="wrap">
+    <h2><span class="fr">Compétences</span><span class="en">Skills</span></h2>
+    <p class="legend"><span class="fr">Niveau de maîtrise : de 1 (débutant) à 5 (confirmé).</span><span class="en">Proficiency: from 1 (beginner) to 5 (advanced).</span></p>
+    <!--
+      NIVEAU DE MAÎTRISE : change le chiffre dans style="--lvl:4"
+      (0 = aucun point, 5 = les 5 points remplis).
+      Pour ajouter une compétence, copie une ligne <li> … </li>.
+    -->
+    <div class="skills">
+      <div>
+        <h3><span class="fr">Réseaux</span><span class="en">Networking</span></h3>
+        <ul>
+          <li><span>TCP/IP</span><span class="dots" style="--lvl:4" role="img" aria-label="4/5"></span></li>
+          <li><span>VLAN</span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+          <li><span>Routage</span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+          <li><span>Cisco Packet Tracer</span><span class="dots" style="--lvl:4" role="img" aria-label="4/5"></span></li>
+          <li><span>Wireshark</span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+        </ul>
+      </div>
+      <div>
+        <h3><span class="fr">Systèmes</span><span class="en">Systems</span></h3>
+        <ul>
+          <li><span>Linux</span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+          <li><span>Windows</span><span class="dots" style="--lvl:4" role="img" aria-label="4/5"></span></li>
+          <li><span>macOS</span><span class="dots" style="--lvl:4" role="img" aria-label="4/5"></span></li>
+          <li><span>Shell / Bash</span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+          <li><span><span class="fr">Virtualisation</span><span class="en">Virtualization</span></span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+        </ul>
+      </div>
+      <div>
+        <h3><span class="fr">Programmation</span><span class="en">Programming</span></h3>
+        <ul>
+          <li><span>Python</span><span class="dots" style="--lvl:4" role="img" aria-label="4/5"></span></li>
+          <li><span>HTML / CSS</span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+          <li><span>JavaScript</span><span class="dots" style="--lvl:2" role="img" aria-label="2/5"></span></li>
+          <li><span>Git</span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+        </ul>
+      </div>
+      <div>
+        <h3><span class="fr">Sécurité</span><span class="en">Security</span></h3>
+        <ul>
+          <li><span><span class="fr">Bonnes pratiques</span><span class="en">Best practices</span></span><span class="dots" style="--lvl:3" role="img" aria-label="3/5"></span></li>
+          <li><span><span class="fr">Pare-feu</span><span class="en">Firewalls</span></span><span class="dots" style="--lvl:2" role="img" aria-label="2/5"></span></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJETS ===== -->
+  <section id="projects">
+  <div class="wrap">
+    <h2><span class="fr">Projets</span><span class="en">Projects</span></h2>
+
+    <!--
+      ╔══════════════ COMMENT AJOUTER UN PROJET ══════════════╗
+      1. Copie un bloc <article class="project"> … </article> ci-dessous
+      2. Colle-le juste avant </div> (la fin de la grille)
+      3. Remplace les textes : chaque texte existe en version
+         <span class="fr"> (français) et <span class="en"> (anglais)
+      4. Pour les tags, ajoute ou supprime des <li>
+      5. Pour la page détail : copie projet-modele.html, renomme-la
+         (ex. projet-monprojet.html) et mets son nom dans href="..."
+      ╚════════════════════════════════════════════════════════╝
+    -->
+    <div class="projects">
+
+      <article class="project">
+        <h3><span class="fr">Bataille navale</span><span class="en">Battleship game</span></h3>
+        <p class="fr">Jeu en terminal avec grille 8×10, placement des bateaux et couleurs d'affichage.</p>
+        <p class="en">Terminal game with an 8×10 grid, ship placement and coloured output.</p>
+        <ul class="tags"><li>Python</li><li>termcolor</li></ul>
+        <a href="projet-bataille-navale.html"><span class="fr">Voir le détail</span><span class="en">See details</span></a>
+      </article>
+
+      <article class="project">
+        <h3><span class="fr">Blackjack</span><span class="en">Blackjack</span></h3>
+        <p class="fr">Jeu de cartes graphique avec gestion de la main du joueur et du croupier.</p>
+        <p class="en">Graphical card game handling both the player's and the dealer's hands.</p>
+        <ul class="tags"><li>Python</li><li>Pygame Zero</li></ul>
+        <a href="projet-blackjack.html"><span class="fr">Voir le détail</span><span class="en">See details</span></a>
+      </article>
+
+      <article class="project">
+        <h3><span class="fr">Réseau d'entreprise simulé</span><span class="en">Simulated company network</span></h3>
+        <p class="fr">Exemple à remplacer : VLAN, routage inter-VLAN et DHCP sur Packet Tracer.</p>
+        <p class="en">Example to replace: VLANs, inter-VLAN routing and DHCP in Packet Tracer.</p>
+        <ul class="tags"><li>Packet Tracer</li><li>VLAN</li><li>DHCP</li></ul>
+        <a href="projet-reseau.html"><span class="fr">Voir le détail</span><span class="en">See details</span></a>
+      </article>
+
+    </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+    <section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p class="contact-intro">
+      <span class="fr">Un stage, une alternance, une question ? Écrivez-moi.</span>
+      <span class="en">An internship, a work-study role, a question? Get in touch.</span>
+    </p>
+    <div class="contact-row">
+
+      <div class="mail-card">
+        <span class="mail-label">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <span class="fr">Mon adresse mail</span><span class="en">My email address</span>
+        </span>
+        <a class="mail-addr" href="mailto:clement.faure030@gmail.com">clement.faure030@gmail.com</a>
+        <button class="copy" type="button" data-copy="clement.faure030@gmail.com">
+          <span class="lbl"><span class="fr">Copier l’adresse</span><span class="en">Copy address</span></span>
+          <span class="done"><span class="fr">Copié ✓</span><span class="en">Copied ✓</span></span>
+        </button>
+      </div>
+
+      <a class="btn linkedin" href="https://www.linkedin.com/in/cl%C3%A9ment-faure-53a6b233b" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        <span class="fr">Mon profil LinkedIn</span><span class="en">My LinkedIn profile</span>
+      </a>
+
+    </div>
+  </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Clément</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+s.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
